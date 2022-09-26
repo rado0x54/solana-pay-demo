@@ -1,17 +1,19 @@
 const {Keypair, PublicKey, Connection, clusterApiUrl, Transaction, SystemProgram} = require('@solana/web3.js');
-const {GatekeeperService} = require('@identity.com/solana-gatekeeper-lib');
 const bs58 = require('bs58');
 const express = require('express');
 const app = express();
 const port = 3010;
 
-const gatekeeperAuthority = Keypair.fromSecretKey(bs58.decode('QzSdRKirjb3Dq64ZoWkxyNwmNVgefWNrAcUGwJF6pVx9ZeiXYCWWc4eBFBYwgP5qBnwmX3nA6PYQqLuqSuuuFsx'));
-const gatekeeperNetwork = new PublicKey('tgnuXXNMDLK8dy7Xm1TdeGyc95MDym4bvAQCwcW21Bf');
+// const gatekeeperAuthority = Keypair.fromSecretKey(bs58.decode('QzSdRKirjb3Dq64ZoWkxyNwmNVgefWNrAcUGwJF6pVx9ZeiXYCWWc4eBFBYwgP5qBnwmX3nA6PYQqLuqSuuuFsx'));
+// const gatekeeperNetwork = new PublicKey('tgnuXXNMDLK8dy7Xm1TdeGyc95MDym4bvAQCwcW21Bf');
 
 app.use(express.static('public'));
 app.use(express.json())
 
 app.all('/request', async(request, response) => {
+    console.log(JSON.stringify(request.headers));
+    console.log(JSON.stringify(request.body));
+
     if(request.method === 'GET') {
         console.log("Received initlal GET request");
 
@@ -27,6 +29,8 @@ app.all('/request', async(request, response) => {
 
         const owner = new PublicKey(request.body.account);
         const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
+
+
 
         // const service = new GatekeeperService(
         //     connection,
