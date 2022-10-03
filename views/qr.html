@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Solana Pay QR Code</title>
+</head>
+<body class="container">
+
+<header>
+    Solana Pay QR Code
+</header>
+
+<main>
+    <div class="jumbotron">
+        <h1>This is great</h1>
+        <p>Welcome to templating using EJS</p>
+    </div>
+    <h2>Variable</h2>
+    <p><%= url %></p>
+    <img src='<%= qr.image %>' width="400" />
+    <div id="qrcode" />
+</main>
+
+<script>var exports = {};</script>
+<script src="scripts/createQR.js" />
+<script>
+    var url = "<%= url %>";
+    var element = document.getElementById('qrcode')
+    createQR(url).append(element)
+</script>
+
+</body>
+
+</html>
